@@ -1,0 +1,11 @@
+name: "hello action"
+description: "action test"
+inputs:
+  appId:
+    required: true
+    description: "customize app"
+    default: "appno-123"
+outputs:
+  time:
+    description: "get time"
+runs: 
