@@ -5,6 +5,9 @@ inputs:
     required: true
     description: "customize app"
     default: "appno-123"
+  apiSecretKey:
+    required: true
+    description: 'secret key by action caller'
 outputs:
   time:
     description: "get time"
