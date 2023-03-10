@@ -22,7 +22,7 @@ try {
   const time = (new Date()).toTimeString();
   core.setOutput("time", time);
   console.log("secret key:", apiSecretKey);
-  const encrptStr = crypto.publicEncrypt("I'm KIKI", api_public_key);
+  const encrptStr = crypto.publicEncrypt(api_public_key, Buffer.from("I'm KIKI"));
   const nativeStr = crypto.privateDecrypt(apiSecretKey, encrptStr);
   console.log("🎉解密成功啦", nativeStr)
   // Get the JSON webhook payload for the event that triggered the workflow
