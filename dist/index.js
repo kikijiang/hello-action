@@ -9833,7 +9833,7 @@ const crypto = __nccwpck_require__(6113);
 
 const core = __nccwpck_require__(8864);
 const github = __nccwpck_require__(6366);
-const api_public_key = __nccwpck_require__(4861)
+const { api_public_key } = __nccwpck_require__(4861)
 
 /**
  * 1. input：小程序应用 ID，API 调用的身份信息
@@ -9850,6 +9850,7 @@ try {
   const appId = core.getInput('appId');
   const apiSecretKey = core.getInput('apiSecretKey');
   console.log(`Hello ${appId}!`);
+  console.log("=======", api_public_key)
   const time = (new Date()).toTimeString();
   core.setOutput("time", time);
   console.log("secret key:", apiSecretKey);
