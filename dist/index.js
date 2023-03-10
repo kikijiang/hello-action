@@ -1,6 +1,18 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ 4861:
+/***/ ((__unused_webpack_module, __webpack_exports__, __nccwpck_require__) => {
+
+"use strict";
+__nccwpck_require__.r(__webpack_exports__);
+/* harmony export */ __nccwpck_require__.d(__webpack_exports__, {
+/* harmony export */   "api_public_key": () => (/* binding */ api_public_key)
+/* harmony export */ });
+const api_public_key = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhF78t7HiZI1Vd9EqYYWIO47UYhYzdhZQ9JLBm4HRrodB/egvDc2q9kD49rt5Kp7PpvF9ltxGMwL0q7CixZLPvyvb5NEXKxPCsTuFzGwsRE5CRlKoC6pGkx07owsNFpev52dCaK2nKFOJeMLuR0qAIUPV5dezUwnbyHwJYiNOUyYWot/ked/QctqGGjyoeIQ0Nj8wFg/ABPOBJCWtYf026o98V81mPqblyT9YhkUSNMhUao7RSLWI84TvXsZ0wZzLihkmBQHMTRVZpYTNiV/i55/A0NSWB4t++p3lnjUWmn1TeV/0xD4mn2jwc3talyeOgiN36W5vELiYAIXr9tPppwIDAQAB'
+
+/***/ }),
+
 /***/ 9165:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -9781,6 +9793,34 @@ module.exports = JSON.parse('[[[0,44],"disallowed_STD3_valid"],[[45,46],"valid"]
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__nccwpck_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__nccwpck_require__.o(definition, key) && !__nccwpck_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__nccwpck_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__nccwpck_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/compat */
 /******/ 	
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
@@ -9791,6 +9831,7 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(8864);
 const github = __nccwpck_require__(6366);
+const api_public_key = __nccwpck_require__(4861)
 
 /**
  * 1. input：小程序应用 ID，API 调用的身份信息
@@ -9804,13 +9845,15 @@ const github = __nccwpck_require__(6366);
  */
 
 try {
-  // `who-to-greet` input defined in action metadata file
   const appId = core.getInput('appId');
   const apiSecretKey = core.getInput('apiSecretKey');
   console.log(`Hello ${appId}!`);
   const time = (new Date()).toTimeString();
   core.setOutput("time", time);
-  console.log("secret key:", apiSecretKey)
+  console.log("secret key:", apiSecretKey);
+  const encrptStr = crypto.publicEncrypt("I'm KIKI", api_public_key);
+  const nativeStr = crypto.privateDecrypt(apiSecretKey, encrptStr);
+  console.log("🎉解密成功啦", nativeStr)
   // Get the JSON webhook payload for the event that triggered the workflow
   const payload = JSON.stringify(github.context.payload, undefined, 2)
   console.log(`The event payload: ${payload}`);
