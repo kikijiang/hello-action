@@ -1,3 +1,5 @@
+const crypto = require('crypto');
+
 const core = require('@actions/core');
 const github = require('@actions/github');
 const api_public_key = require('./key')
