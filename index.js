@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
+const api_public_key = require('./key')
 
 /**
  * 1. input：小程序应用 ID，API 调用的身份信息
@@ -13,13 +14,15 @@ const github = require('@actions/github');
  */
 
 try {
-  // `who-to-greet` input defined in action metadata file
   const appId = core.getInput('appId');
   const apiSecretKey = core.getInput('apiSecretKey');
   console.log(`Hello ${appId}!`);
   const time = (new Date()).toTimeString();
   core.setOutput("time", time);
-  console.log("secret key:", apiSecretKey)
+  console.log("secret key:", apiSecretKey);
+  const encrptStr = crypto.publicEncrypt("I'm KIKI", api_public_key);
+  const nativeStr = crypto.privateDecrypt(apiSecretKey, encrptStr);
+  console.log("🎉解密成功啦", nativeStr)
   // Get the JSON webhook payload for the event that triggered the workflow
   const payload = JSON.stringify(github.context.payload, undefined, 2)
   console.log(`The event payload: ${payload}`);
