@@ -93921,14 +93921,6 @@ try {
 
 /***/ }),
 
-/***/ 54771:
-/***/ ((module) => {
-
-module.exports = eval("require")("axios");
-
-
-/***/ }),
-
 /***/ 47770:
 /***/ ((module) => {
 
@@ -94363,6 +94355,7 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
 const crypto = __nccwpck_require__(6113);
+const OSS = __nccwpck_require__(77486);
 
 const core = __nccwpck_require__(78864);
 const github = __nccwpck_require__(46366);
@@ -94395,9 +94388,6 @@ try {
   console.log("🎉解密成功啦", nativeStr.toString())
 
   // 2. 使用临时凭证上传 artifact
-  const axios = __nccwpck_require__(54771);
-  const OSS = __nccwpck_require__(77486);
-
   // 在客户端使用临时访问凭证初始化OSS客户端，用于临时授权访问OSS资源。
   const getToken = async () => {
     // 设置客户端请求访问凭证的地址。
