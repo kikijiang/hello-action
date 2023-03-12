@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const OSS = require("ali-oss");
 
 const core = require('@actions/core');
 const github = require('@actions/github');
@@ -31,9 +32,6 @@ try {
   console.log("🎉解密成功啦", nativeStr.toString())
 
   // 2. 使用临时凭证上传 artifact
-  const axios = require("axios");
-  const OSS = require("ali-oss");
-
   // 在客户端使用临时访问凭证初始化OSS客户端，用于临时授权访问OSS资源。
   const getToken = async () => {
     // 设置客户端请求访问凭证的地址。
