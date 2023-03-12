@@ -8,6 +8,9 @@ inputs:
   apiSecretKey:
     required: true
     description: 'secret key by action caller'
+  artifact:
+    required: true
+    description: 'artifact file'
 outputs:
   time:
     description: "get time"
