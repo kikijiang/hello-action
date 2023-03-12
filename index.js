@@ -33,32 +33,31 @@ try {
 
   // 2. 使用临时凭证上传 artifact
   // 在客户端使用临时访问凭证初始化OSS客户端，用于临时授权访问OSS资源。
-  const getToken = async () => {
-    // 设置客户端请求访问凭证的地址。
-    await Promise.resolve({
-      data:{
-        "SecurityToken": "CAIS8wF1q6Ft5B2yfSjIr5bQH8n6qrFX8JOhbHX71noDTuhpjYfS0Tz2IHBEf3hrAu8at/k/m2BS6vcclqNpQppCXlfYYNBstnHYL8wkO9ivgde8yJBZor/HcDHhJnyW9cvWZPqDP7G5U/yxalfCuzZuyL/hD1uLVECkNpv74vwOLK5gPG+CYCFBGc1dKyZ7tcYeLgGxD/u2NQPwiWeiZygB+CgE0D8jsfjlmpDMtEWC1QOlktV4/dqhfsKWCOB3J4p6XtuP2+h7S7HMyiY46WIRpPct3fcfpmue44HCUwMNskucUfDd99p0NxN0fbQq1Xm1L3BVOpcagAFtyMpZ0HuEg28pSCs3aBqFzPu6yA6cNmxaVpAyZpdQewQwPdB43xOvwnIJcKlcKySNsT5s7i5g0idhfDe2VHCEmCOt4Aukvp5jrVMC6dHigQ1aGrXQH2fIUEd+XOZWK0hgRRzQJNVHnx/eUGDYXDGUMtiSoWqqas+hRHcNVfiVDw==",
-        "AccessKeyId": "STS.NUeTsNGnvGQJnSJ2zVBgEbBy3",
-        "AccessKeySecret": "7drifsyDHJMRh4Ym5PBEKaSXRA55PUdbVp2CsB1WLPsL",
-      }
-    }).then((token) => {
-      const client = new OSS({
-        // yourRegion填写Bucket所在地域。以华东1（杭州）为例，yourRegion填写为oss-cn-hangzhou。
-        region: 'oss-cn-hangzhou',
-        accessKeyId: token.data.AccessKeyId,
-        accessKeySecret: token.data.AccessKeySecret,
-        stsToken: token.data.SecurityToken,
-        // 填写Bucket名称。
-        bucket: "githubforkiki",
-      });
-      // 使用临时访问凭证上传文件。
-      // 填写不包含Bucket名称在内的Object的完整路径，例如exampleobject.jpg。
-      // 填写本地文件的完整路径，例如D:\\example.jpg。
-      client.put('miniprogram', artifact).then((res)=>{
-        console.log("🎉上传成功", res)
-      }).catch(e=>console.log(e))
+  // 设置客户端请求访问凭证的地址。
+  Promise.resolve({
+    data:{
+      "SecurityToken": "CAIS8wF1q6Ft5B2yfSjIr5bQH8n6qrFX8JOhbHX71noDTuhpjYfS0Tz2IHBEf3hrAu8at/k/m2BS6vcclqNpQppCXlfYYNBstnHYL8wkO9ivgde8yJBZor/HcDHhJnyW9cvWZPqDP7G5U/yxalfCuzZuyL/hD1uLVECkNpv74vwOLK5gPG+CYCFBGc1dKyZ7tcYeLgGxD/u2NQPwiWeiZygB+CgE0D8jsfjlmpDMtEWC1QOlktV4/dqhfsKWCOB3J4p6XtuP2+h7S7HMyiY46WIRpPct3fcfpmue44HCUwMNskucUfDd99p0NxN0fbQq1Xm1L3BVOpcagAFtyMpZ0HuEg28pSCs3aBqFzPu6yA6cNmxaVpAyZpdQewQwPdB43xOvwnIJcKlcKySNsT5s7i5g0idhfDe2VHCEmCOt4Aukvp5jrVMC6dHigQ1aGrXQH2fIUEd+XOZWK0hgRRzQJNVHnx/eUGDYXDGUMtiSoWqqas+hRHcNVfiVDw==",
+      "AccessKeyId": "STS.NUeTsNGnvGQJnSJ2zVBgEbBy3",
+      "AccessKeySecret": "7drifsyDHJMRh4Ym5PBEKaSXRA55PUdbVp2CsB1WLPsL",
+    }
+  }).then((token) => {
+    const client = new OSS({
+      // yourRegion填写Bucket所在地域。以华东1（杭州）为例，yourRegion填写为oss-cn-hangzhou。
+      region: 'oss-cn-hangzhou',
+      accessKeyId: token.data.AccessKeyId,
+      accessKeySecret: token.data.AccessKeySecret,
+      stsToken: token.data.SecurityToken,
+      // 填写Bucket名称。
+      bucket: "githubforkiki",
     });
-  };
+    console.log("🎉建立上传 oss 的客户端成功！")
+    // 使用临时访问凭证上传文件。
+    // 填写不包含Bucket名称在内的Object的完整路径，例如exampleobject.jpg。
+    // 填写本地文件的完整路径，例如D:\\example.jpg。
+    client.put('miniprogram', artifact).then((res)=>{
+      console.log("🎉上传成功", res)
+    }).catch(e=>console.log(e))
+  });
 
 
   // Get the JSON webhook payload for the event that triggered the workflow
