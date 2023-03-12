@@ -93921,6 +93921,14 @@ try {
 
 /***/ }),
 
+/***/ 61892:
+/***/ ((module) => {
+
+module.exports = eval("require")("@actions/artifact");
+
+
+/***/ }),
+
 /***/ 47770:
 /***/ ((module) => {
 
@@ -94407,12 +94415,26 @@ try {
       bucket: "githubforkiki",
     });
     console.log("🎉建立上传 oss 的客户端成功！")
+
+    // 下载 artifact 
+    const artifact = __nccwpck_require__(61892);
+    const artifactClient = artifact.create()
+    const artifactName = 'my-artifact';
+    const path = `${appId}`
+    const options = {
+      createArtifactFolder: false
+    }
+
+    artifactClient.downloadArtifact(artifactName, path, options).then((downloadResponse) => {
+      console.log("🎉下载 artifact 成功", downloadResponse.toString())
+      client.put('miniprogram', downloadResponse.downloadPath).then((res)=>{
+        console.log("🎉上传成功", res)
+      }).catch(e=>console.log(e))
+    })
     // 使用临时访问凭证上传文件。
     // 填写不包含Bucket名称在内的Object的完整路径，例如exampleobject.jpg。
     // 填写本地文件的完整路径，例如D:\\example.jpg。
-    client.put('miniprogram', artifact).then((res)=>{
-      console.log("🎉上传成功", res)
-    }).catch(e=>console.log(e))
+    
   });
 
 
