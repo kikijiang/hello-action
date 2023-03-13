@@ -14,7 +14,7 @@ const core = __nccwpck_require__(78864);
 const { context } = github;
 
 const createCommentForPR = async () => {
-  const { githubToken } = core.getInput('githubToken');
+  const githubToken = core.getInput('githubToken');
   console.log("⚠️ sectrets.GITHUB_TOKEN", githubToken);
   const octokit = github.getOctokit(githubToken);
   const result = await octokit.rest.pulls.createReviewComment({
@@ -28,6 +28,7 @@ const createCommentForPR = async () => {
   })
   console.log("🎉😄创建 comment 成功", JSON.stringify(result))
 }
+
 
 /***/ }),
 

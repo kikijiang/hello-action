@@ -3,7 +3,7 @@ const core = require('@actions/core');
 const { context } = github;
 
 export const createCommentForPR = async () => {
-  const { githubToken } = core.getInput('githubToken');
+  const githubToken = core.getInput('githubToken');
   console.log("⚠️ sectrets.GITHUB_TOKEN", githubToken);
   const octokit = github.getOctokit(githubToken);
   const result = await octokit.rest.pulls.createReviewComment({
