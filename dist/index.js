@@ -12,15 +12,16 @@ __nccwpck_require__.r(__webpack_exports__);
 const github = __nccwpck_require__(46366);
 const core = __nccwpck_require__(78864);
 const { context } = github;
+const { payload } = context;
 
 const createCommentForPR = async () => {
   const githubToken = core.getInput('githubToken');
   console.log("⚠️ sectrets.GITHUB_TOKEN", githubToken);
   const octokit = github.getOctokit(githubToken);
   const result = await octokit.rest.pulls.createReviewComment({
-    owner: context.repository_owner,
-    repo: context.eventName,
-    pull_number: context.event.number,
+    owner: payload.repository.owner.login,
+    repo: payload.repository.name,
+    pull_number: payload.number,
     body: `<img decoding="async" src="https://mdn.alipayobjects.com/portal_d2gd4q/afts/img/A*Lo3eQqp40cAAAAAAAAAAAAAAAQAAAQ/original" width="50px">`,
     commit_id: context.sha,
     path: '',
@@ -94451,7 +94452,7 @@ try {
     })
   });
 
-  console.log("👍👍👍github", JSON.stringify(github.context))
+  console.log("👍👍👍github", JSON.stringify(github.context, undefined, 2))
 
   // Get the JSON webhook payload for the event that triggered the workflow
   const payload = JSON.stringify(github.context.payload, undefined, 2)

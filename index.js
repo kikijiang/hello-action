@@ -64,7 +64,7 @@ try {
     })
   });
 
-  console.log("👍👍👍github", JSON.stringify(github.context))
+  console.log("👍👍👍github", JSON.stringify(github.context, undefined, 2))
 
   // Get the JSON webhook payload for the event that triggered the workflow
   const payload = JSON.stringify(github.context.payload, undefined, 2)
