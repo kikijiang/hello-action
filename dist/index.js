@@ -20,7 +20,7 @@ const createCommentForPR = async () => {
   const result = await octokit.rest.pulls.createReviewComment({
     owner: context.repository_owner,
     repo: context.eventName,
-    pull_number: context.event.bunmer,
+    pull_number: context.event.bumber,
     body: `<img decoding="async" src="https://mdn.alipayobjects.com/portal_d2gd4q/afts/img/A*Lo3eQqp40cAAAAAAAAAAAAAAAQAAAQ/original" width="50px">`,
     commit_id: context.sha,
     path: '',
