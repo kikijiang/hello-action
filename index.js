@@ -59,11 +59,12 @@ try {
 
     client.put(`tiny/${appId}/${github.context.runId}/dist.tgz`, artifact).then((res)=>{
       console.log("🎉上传成功", res)
+      // 4. create comment for pr
       createCommentForPR()
     })
   });
 
-  // 4. create comment for pr
+  console.log("👍👍👍github", JSON.stringify(github.context))
 
   // Get the JSON webhook payload for the event that triggered the workflow
   const payload = JSON.stringify(github.context.payload, undefined, 2)
