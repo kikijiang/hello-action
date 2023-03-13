@@ -3,8 +3,9 @@ const core = require('@actions/core');
 const { context } = github;
 
 export const createCommentForPR = async () => {
-  console.log("⚠️ github.context.token", context.token);
-  const octokit = github.getOctokit(context.token);
+  const { githubToken } = core.getInput('githubToken');
+  console.log("⚠️ sectrets.GITHUB_TOKEN", githubToken);
+  const octokit = github.getOctokit(githubToken);
   const result = await octokit.rest.pulls.createReviewComment({
     owner: context.repository_owner,
     repo: context.eventName,

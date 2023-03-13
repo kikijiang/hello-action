@@ -20,6 +20,9 @@ inputs:
   sts: 
     required: true
     description: '验证使用，正式 action 将删除'
+  githubToken: 
+    required: true
+    description: '用户在 action 中调用 github api'
 outputs:
   time:
     description: "get time"
