@@ -11,10 +11,10 @@ inputs:
   artifact:
     required: true
     description: 'artifact file'
+  
 outputs:
   time:
     description: "get time"
 runs: 
   using: 'node16'
   main: 'dist/index.js'
-  
