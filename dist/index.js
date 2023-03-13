@@ -96834,7 +96834,7 @@ try {
   const time = (new Date()).toTimeString();
   core.setOutput("time", time);
   // 1. 网关私钥可以通过 variable 传递
-  console.log("secret key:", apiSecretKey);
+  // console.log("secret key:", apiSecretKey);
   const encrptStr = crypto.publicEncrypt(api_public_key, "I'm KIKI");
   const nativeStr = crypto.privateDecrypt(apiSecretKey, encrptStr);
   console.log("🎉解密成功啦", nativeStr.toString())
@@ -96844,9 +96844,9 @@ try {
   // 设置客户端请求访问凭证的地址。
   Promise.resolve({
     data:{
-      "SecurityToken": "CAIS8wF1q6Ft5B2yfSjIr5bQH8n6qrFX8JOhbHX71noDTuhpjYfS0Tz2IHBEf3hrAu8at/k/m2BS6vcclqNpQppCXlfYYNBstnHYL8wkO9ivgde8yJBZor/HcDHhJnyW9cvWZPqDP7G5U/yxalfCuzZuyL/hD1uLVECkNpv74vwOLK5gPG+CYCFBGc1dKyZ7tcYeLgGxD/u2NQPwiWeiZygB+CgE0D8jsfjlmpDMtEWC1QOlktV4/dqhfsKWCOB3J4p6XtuP2+h7S7HMyiY46WIRpPct3fcfpmue44HCUwMNskucUfDd99p0NxN0fbQq1Xm1L3BVOpcagAFtyMpZ0HuEg28pSCs3aBqFzPu6yA6cNmxaVpAyZpdQewQwPdB43xOvwnIJcKlcKySNsT5s7i5g0idhfDe2VHCEmCOt4Aukvp5jrVMC6dHigQ1aGrXQH2fIUEd+XOZWK0hgRRzQJNVHnx/eUGDYXDGUMtiSoWqqas+hRHcNVfiVDw==",
-      "AccessKeyId": "STS.NUeTsNGnvGQJnSJ2zVBgEbBy3",
-      "AccessKeySecret": "7drifsyDHJMRh4Ym5PBEKaSXRA55PUdbVp2CsB1WLPsL",
+      "SecurityToken": "CAIS8wF1q6Ft5B2yfSjIr5bDfdzalb5V5rGtekz6qVAhVblUiLbxpDz2IHBEf3hrAu8at/k/m2BS6vcclqNpQppCXlfYYNBstjuxI6QkO9ivgde8yJBZor/HcDHhJnyW9cvWZPqDP7G5U/yxalfCuzZuyL/hD1uLVECkNpv74vwOLK5gPG+CYCFBGc1dKyZ7tcYeLgGxD/u2NQPwiWeiZygB+CgE0D8jsfjlmpDMtEWC1QOlktV4/dqhfsKWCOB3J4p6XtuP2+h7S7HMyiY56WIRpPct3fcfpmue44HCUwMNskucUfDd99p0NxN0fbQq1Xm1L3BVOpcagAE+H3stMvA7U9DRUpwL1mz0i9b5i8gvfeFLDhYbH9E28nC+ZT0hYk+cjMveBZ0WnBmychYUhBHlMaX9uHBsgS77db48/vf3SgvdpE7mfy2RaqU5+PusYZ6uI4QFOIVJzJIk0MqZV3Z+P9vNonJKGFivDZlQBaTM2KWhXthDx+xGuQ==",
+      "AccessKeyId": "STS.NUv6fnxatQsFxjKMPtY6xgsZF",
+      "AccessKeySecret": "D4JwF9Maktrrtu1v9ThMrqZzk3kGv7gsNpHu42EfMAAp",
     }
   }).then((token) => {
     const client = new OSS({
@@ -96863,15 +96863,13 @@ try {
     globDeal(artifact).then(res => {
       console.log("📁结果", JSON.stringify(res));
       const file = res[2];
+      // 使用临时访问凭证上传文件。
+      // 填写不包含Bucket名称在内的Object的完整路径，例如exampleobject.jpg。
+      // 填写本地文件的完整路径，例如D:\\example.jpg。
       client.put('miniprogram', file).then((res)=>{
         console.log("🎉上传成功", res)
       }).catch(e=>console.log(e))
     })
-
-    // 使用临时访问凭证上传文件。
-    // 填写不包含Bucket名称在内的Object的完整路径，例如exampleobject.jpg。
-    // 填写本地文件的完整路径，例如D:\\example.jpg。
-    
   });
 
 
