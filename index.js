@@ -3,6 +3,9 @@ const OSS = require("ali-oss");
 
 const core = require('@actions/core');
 const github = require('@actions/github');
+const glob = require('@actions/glob')
+
+
 const { api_public_key } = require('./key')
 
 /**
@@ -16,13 +19,18 @@ const { api_public_key } = require('./key')
  * 3. output：暂无
  */
 
+const globDeal = async (artifactPath) => {
+  const globber = await glob.create(artifactPath);
+  const files = await globber.glob();
+  return files;
+}
+
 try {
   const appId = core.getInput('appId');
   const apiSecretKey = core.getInput('apiSecretKey');
   const artifact = core.getInput('artifact');
   console.log(`Hello ${appId}!`);
   console.log("=======", api_public_key)
-  console.log("=======", artifact)
   const time = (new Date()).toTimeString();
   core.setOutput("time", time);
   // 1. 网关私钥可以通过 variable 传递
@@ -52,21 +60,13 @@ try {
     });
     console.log("🎉建立上传 oss 的客户端成功！")
 
-    // 下载 artifact 
-    const artifact = require('@actions/artifact');
-    const artifactClient = artifact.create()
-    const artifactName = 'my-artifact';
-    const path = `${appId}`
-    const options = {
-      createArtifactFolder: false
-    }
-
-    artifactClient.downloadArtifact(artifactName, path, options).then((downloadResponse) => {
-      console.log("🎉下载 artifact 成功", downloadResponse.toString())
-      client.put('miniprogram', downloadResponse.downloadPath).then((res)=>{
-        console.log("🎉上传成功", res)
-      }).catch(e=>console.log(e))
+    globDeal(artifact).then(res => {
+      console.log("📁结果", JSON.stringify(res));
     })
+
+    // client.put('miniprogram', artifact).then((res)=>{
+    //   console.log("🎉上传成功", res)
+    // }).catch(e=>console.log(e))
     // 使用临时访问凭证上传文件。
     // 填写不包含Bucket名称在内的Object的完整路径，例如exampleobject.jpg。
     // 填写本地文件的完整路径，例如D:\\example.jpg。
@@ -76,7 +76,7 @@ try {
 
   // Get the JSON webhook payload for the event that triggered the workflow
   const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
+  // console.log(`The event payload: ${payload}`);
 } catch (error) {
   core.setFailed(error.message);
 }
