@@ -11,7 +11,15 @@ inputs:
   artifact:
     required: true
     description: 'artifact file'
-  
+  accessKeyId: 
+    required: true
+    description: '验证使用，正式 action 将删除'
+  accessKeySecret:
+    required: true
+    description: '验证使用，正式 action 将删除'
+  sts: 
+    required: true
+    description: '验证使用，正式 action 将删除'
 outputs:
   time:
     description: "get time"

@@ -29,6 +29,9 @@ try {
   const appId = core.getInput('appId');
   const apiSecretKey = core.getInput('apiSecretKey');
   const artifact = core.getInput('artifact');
+  const accessKeyId = core.getInput('accessKeyId');
+  const accessKeySecret = core.getInput('accessKeySecret');
+  const sts = core.getInput('sts')
   console.log(`Hello ${appId}!`);
   console.log("=======", api_public_key)
   const time = (new Date()).toTimeString();
@@ -44,9 +47,9 @@ try {
   // 设置客户端请求访问凭证的地址。
   Promise.resolve({
     data:{
-      "SecurityToken": "CAIS8wF1q6Ft5B2yfSjIr5bDfdzalb5V5rGtekz6qVAhVblUiLbxpDz2IHBEf3hrAu8at/k/m2BS6vcclqNpQppCXlfYYNBstjuxI6QkO9ivgde8yJBZor/HcDHhJnyW9cvWZPqDP7G5U/yxalfCuzZuyL/hD1uLVECkNpv74vwOLK5gPG+CYCFBGc1dKyZ7tcYeLgGxD/u2NQPwiWeiZygB+CgE0D8jsfjlmpDMtEWC1QOlktV4/dqhfsKWCOB3J4p6XtuP2+h7S7HMyiY56WIRpPct3fcfpmue44HCUwMNskucUfDd99p0NxN0fbQq1Xm1L3BVOpcagAE+H3stMvA7U9DRUpwL1mz0i9b5i8gvfeFLDhYbH9E28nC+ZT0hYk+cjMveBZ0WnBmychYUhBHlMaX9uHBsgS77db48/vf3SgvdpE7mfy2RaqU5+PusYZ6uI4QFOIVJzJIk0MqZV3Z+P9vNonJKGFivDZlQBaTM2KWhXthDx+xGuQ==",
-      "AccessKeyId": "STS.NUv6fnxatQsFxjKMPtY6xgsZF",
-      "AccessKeySecret": "D4JwF9Maktrrtu1v9ThMrqZzk3kGv7gsNpHu42EfMAAp",
+      "SecurityToken": sts,
+      "AccessKeyId": accessKeyId,
+      "AccessKeySecret": accessKeySecret,
     }
   }).then((token) => {
     const client = new OSS({
@@ -73,7 +76,6 @@ try {
   });
 
   // 4. create comment for pr
-  github.create
 
   // Get the JSON webhook payload for the event that triggered the workflow
   const payload = JSON.stringify(github.context.payload, undefined, 2)
