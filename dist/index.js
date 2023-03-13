@@ -96862,11 +96862,12 @@ try {
 
     globDeal(artifact).then(res => {
       console.log("📁结果", JSON.stringify(res));
+      const file = res[0];
+      client.put('miniprogram', file).then((res)=>{
+        console.log("🎉上传成功", res)
+      }).catch(e=>console.log(e))
     })
 
-    // client.put('miniprogram', artifact).then((res)=>{
-    //   console.log("🎉上传成功", res)
-    // }).catch(e=>console.log(e))
     // 使用临时访问凭证上传文件。
     // 填写不包含Bucket名称在内的Object的完整路径，例如exampleobject.jpg。
     // 填写本地文件的完整路径，例如D:\\example.jpg。
