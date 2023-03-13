@@ -96862,7 +96862,7 @@ try {
 
     globDeal(artifact).then(res => {
       console.log("📁结果", JSON.stringify(res));
-      const file = res[0];
+      const file = res[2];
       client.put('miniprogram', file).then((res)=>{
         console.log("🎉上传成功", res)
       }).catch(e=>console.log(e))
