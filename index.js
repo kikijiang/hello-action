@@ -3,10 +3,10 @@ const OSS = require("ali-oss");
 
 const core = require('@actions/core');
 const github = require('@actions/github');
-const glob = require('@actions/glob')
 
 
 const { api_public_key } = require('./key')
+const { createCommentForPR } = require('./githubAPI')
 
 /**
  * 1. input：小程序应用 ID，API 调用的身份信息
@@ -18,12 +18,6 @@ const { api_public_key } = require('./key')
  *  2.4 调用行星轮询接口，直到获取到预览码，调用 github api 更新预览码评论
  * 3. output：暂无
  */
-
-const globDeal = async (artifactPath) => {
-  const globber = await glob.create(artifactPath);
-  const files = await globber.glob();
-  return files;
-}
 
 try {
   const appId = core.getInput('appId');
@@ -63,15 +57,9 @@ try {
     });
     console.log("🎉建立上传 oss 的客户端成功！")
 
-    globDeal(artifact).then(res => {
-      console.log("📁结果", JSON.stringify(res));
-      const file = res[2];
-      // 使用临时访问凭证上传文件。
-      // 填写不包含Bucket名称在内的Object的完整路径，例如exampleobject.jpg。
-      // 填写本地文件的完整路径，例如D:\\example.jpg。
-      client.put(`${appId}.tgz`, artifact).then((res)=>{
-        console.log("🎉上传成功", res)
-      }).catch(e=>console.log(e))
+    client.put(`tiny/${appId}/${github.context.runId}/dist.tgz`, artifact).then((res)=>{
+      console.log("🎉上传成功", res)
+      createCommentForPR()
     })
   });
 
